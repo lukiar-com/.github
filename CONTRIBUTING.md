@@ -1,8 +1,8 @@
 # Guía de contribución — Lukiar
 
-Bienvenido/a al ecosistema Lukiar. Este documento es la **inducción rápida** para quien contribuye en los repositorios de la organización `lukiar-com`.
+Bienvenido/a al ecosistema Lukiar. Este documento es la **inducción rápida** de proceso para quien contribuye en los repositorios de la organización `lukiar-com`.
 
-> Los repos de producto son privados. Las reglas de este archivo aplican por defecto a toda la organización salvo que un repo declare lo contrario.
+> Los repos de producto son **privados**. El detalle de stack, arquitectura y arranque local vive en la documentación interna de cada repo / workspace. Aquí solo fijamos gobernanza compartida.
 
 ---
 
@@ -10,7 +10,7 @@ Bienvenido/a al ecosistema Lukiar. Este documento es la **inducción rápida** p
 
 1. **Calidad sobre velocidad ciega** — un PR pequeño y revisable vale más que un megadiff.
 2. **Un ticket, un objetivo** — no mezclar features no pedidas ni refactors colaterales.
-3. **Multi-repo consciente** — cada carpeta/`lukiar-*` es su propio git; versiona en el repo correcto.
+3. **Repo correcto** — versiona el cambio en el repositorio dueño del componente.
 4. **Idioma** — documentación, comentarios y commits en **español**; nombres de código (variables, tipos, archivos) en **inglés**.
 
 ---
@@ -31,11 +31,11 @@ Ejemplos:
 
 ```text
 feat: agregar filtro por categoría en el catálogo
-fix: corregir aislamiento de tenant en listado de pedidos
-chore: actualizar pnpm a 11.5.2
+fix: corregir validación de sesión en checkout
+chore: actualizar dependencias de lint
 ```
 
-Scope opcional: `feat(pos): …`, `fix(saas-backend): …`.
+Scope opcional: `feat(pos): …`, `fix(api): …`.
 
 ---
 
@@ -66,57 +66,11 @@ Reglas:
 
 ---
 
-## Entorno local (workspace)
+## Entorno de desarrollo
 
-El desarrollo habitual ocurre en el workspace contenedor [`lukiar-com`](https://github.com/lukiar-com/lukiar-com), que clona los subproyectos y orquesta el stack.
+El onboarding técnico (herramientas, bootstrap, migraciones y comandos de desarrollo) está documentado **dentro de los repositorios privados** a los que tengas acceso.
 
-### Prerrequisitos
-
-- **Node.js** 20+
-- **pnpm** `11.5.2` (declarado en `packageManager`)
-- **Rust** estable (edition 2021; backends Actix-web)
-- **PostgreSQL** (dev local) + extensión PostGIS para la app pública
-- **Valkey** o Redis compatible (caché / pub-sub SaaS)
-- **Git**
-
-### Bootstrap
-
-```bash
-# 1. Clonar el workspace
-git clone https://github.com/lukiar-com/lukiar-com.git
-cd lukiar-com
-
-# 2. Clonar los subproyectos (multi-repo)
-./scripts/bootstrap.sh          # HTTPS
-# ./scripts/bootstrap.sh --ssh  # SSH
-
-# 3. Dependencias del orquestador
-pnpm install
-
-# 4. En cada frontend que toques
-cd lukiar-saas-dashboard && pnpm install && cd ..
-# … repetir según el repo de trabajo …
-
-# 5. Migraciones
-pnpm migrate:saas
-pnpm migrate:public
-
-# 6. Levantar el ecosistema
-pnpm infra          # PostgreSQL + Valkey (si aplica el script)
-pnpm dev            # backends + frontends + gateway (+ print-agent)
-pnpm dev:lite       # igual, sin print-agent (menos RAM)
-```
-
-Comandos útiles:
-
-| Comando | Qué hace |
-| ------- | -------- |
-| `pnpm dev:back` | Solo backends Rust (`:8080`, `:8081`) |
-| `pnpm dev:front` | Solo frontends |
-| `pnpm stop` / `pnpm restart` | Detener / reiniciar procesos del orquestador |
-| `pnpm smoke:…` | Smokes de autenticación, pedidos, L360, etc. |
-
-Detalle de puertos y flujos: ver `GUIA-DESARROLLO.md` en el workspace.
+Si eres parte del equipo y aún no tienes acceso al workspace o a un repo concreto, escríbenos a [admin@lukiar.com](mailto:admin@lukiar.com).
 
 ---
 

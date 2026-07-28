@@ -17,15 +17,15 @@
 
 ### Verificación local
 
-- [ ] Probé el flujo afectado en local (`pnpm dev` / servicio concreto)
-- [ ] No rompí contratos de API públicos ni de sync SaaS ↔ app pública (si aplica)
+- [ ] Probé el flujo afectado en el entorno de desarrollo del equipo
+- [ ] No rompí contratos públicos ni integraciones entre servicios (si aplica)
 - [ ] Revisé migraciones / seeds / variables de entorno tocadas (si aplica)
 
 ### Calidad de código
 
-- [ ] Lint pasa en el/los paquetes modificados (`pnpm lint` o equivalente del repo)
-- [ ] Tests relevantes pasan (`pnpm test`, `cargo test`, script de integración del repo)
-- [ ] Tipado / build OK (`pnpm build` / `cargo check` según stack)
+- [ ] Lint pasa en el/los paquetes modificados
+- [ ] Tests relevantes pasan (unitarios / integración según el repo)
+- [ ] Tipado / build OK según el stack del repo
 
 ### Revisión
 
